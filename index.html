@@ -15,6 +15,7 @@
         
         <p>Temperatura actual: <span id="temperatura"></span> °C</p><!--Mostrar temperatura-->
         <p>Condiciones : <span id="descripcion"></span></p> <!--Mostrar descripcion del clima-->
+        <p>Current time : <span id="time"></span></p> <!--Mostrar descripcion del clima-->
     </div>
 
     <nav class="botonera">
@@ -24,6 +25,8 @@
         <button onclick="consultar('Medellin')">Medellín</button>
         <button onclick="consultar('Cali')">Cali</button>
         <button onclick="consultar('Pereira')">Pereira</button>
+        <button onclick="consultar('Londres')">Londres</button>
+        <button onclick="consultar('Nueva York')">Nueva York</button>
       </nav>
 
     
@@ -34,9 +37,13 @@
       ["Cartagena", "https://api.open-meteo.com/v1/forecast?latitude=10.39&longitude=-75.48&current_weather=true&timezone=America/Bogota"],
       ["Medellin", "https://api.open-meteo.com/v1/forecast?latitude=6.24&longitude=-75.56&current_weather=true&timezone=America/Bogota"],
       ["Cali", "https://api.open-meteo.com/v1/forecast?latitude=3.45&longitude=-76.52&current_weather=true&timezone=America/Bogota"],
-      ["Pereira", "https://api.open-meteo.com/v1/forecast?latitude=4.80&longitude=-75.69&current_weather=true&timezone=America/Bogota"]
+      ["Pereira", "https://api.open-meteo.com/v1/forecast?latitude=4.80&longitude=-75.69&current_weather=true&timezone=America/Bogota"],
+      ["Londres", "https://api.open-meteo.com/v1/forecast?latitude=51.50&longitude=-0.13&current_weather=true&timezone=auto"],
+      ["Nueva York", "https://api.open-meteo.com/v1/forecast?latitude=40.70&longitude=-74.01&current_weather=true&timezone=auto"]
     ]);
   
+    https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m
+
     async function consultar(ciudad) {
       const url = urlAPI.get(ciudad);
       const ciudadElegida = ciudad;
@@ -52,6 +59,7 @@
   
         const temperatura = datos.current_weather.temperature;
         const codigoClima = datos.current_weather.weathercode;
+        const currentTime = datos.current_weather.time;
   
         const condiciones = {
           0: "Despejado",
@@ -72,6 +80,7 @@
         document.getElementById("ciudadActual").textContent = ciudadElegida;
         document.getElementById("temperatura").textContent = temperatura;
         document.getElementById("descripcion").textContent = condiciones[codigoClima] || "Desconocido";
+        document.getElementById("time").textContent = currentTime;
 
         // Selecciona el contenedor
 const contenedor = document.querySelector(".contenedor");
