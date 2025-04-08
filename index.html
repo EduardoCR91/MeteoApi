@@ -12,7 +12,7 @@
     <div class="contenedor">
       <video id="videoClima" autoplay muted loop></video>    
         <h3>Ciudad: </h3>
-        <p id="ciudadActual"></p>
+        <h3 id="ciudadActual"></h3>
         
         <div class="info">
           <p>Temperatura actual: <span id="temperatura"></span> °C</p><!--Mostrar temperatura-->
@@ -105,6 +105,7 @@ if ([0, 1].includes(codigoClima)) {
 } 
 
 video.src = `videos/${nombreVideo}.mp4`; // carpeta 'videos' con tus archivos
+
   
       } catch (error) {
         console.error("Error al obtener el clima:", error);

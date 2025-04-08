@@ -5,6 +5,7 @@
     color: white;
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
   }
 
   body {
@@ -25,7 +26,7 @@
     color: white;
     width: 400px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.4); /* para que se lea el texto */
+    background-color: rgb(57, 146, 151); /* para que se lea el texto */
   }
 
   
@@ -34,6 +35,7 @@
     height: 100%;
     object-fit: cover;
     z-index: -1; /* detrás del contenido */
+    border-radius: 15px;
   }
   
   /* Estilos de los botones */
