@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    
+    <div class="contenedor">
+        <h3>Ciudad: </h3>
+        <p id="ciudadActual"></p>
+        
+        <p>Temperatura actual: <span id="temperatura"></span> °C</p><!--Mostrar temperatura-->
+        <p>Condiciones : <span id="descripcion"></span></p> <!--Mostrar descripcion del clima-->
+    </div>
+
+    <nav class="botonera">
+        <button onclick="consultar('Bogota')">Bogotá</button>
+        <button onclick="consultar('Barranquilla')">Barranquilla</button>
+        <button onclick="consultar('Cartagena')">Cartagena</button>
+        <button onclick="consultar('Medellin')">Medellín</button>
+        <button onclick="consultar('Cali')">Cali</button>
+        <button onclick="consultar('Pereira')">Pereira</button>
+      </nav>
+
+    
+<script>
+    const urlAPI = new Map([
+      ["Bogota", "https://api.open-meteo.com/v1/forecast?latitude=4.71&longitude=-74.07&current_weather=true&timezone=America/Bogota"],
+      ["Barranquilla", "https://api.open-meteo.com/v1/forecast?latitude=10.96&longitude=-74.81&current_weather=true&timezone=America/Bogota"],
+      ["Cartagena", "https://api.open-meteo.com/v1/forecast?latitude=10.39&longitude=-75.48&current_weather=true&timezone=America/Bogota"],
+      ["Medellin", "https://api.open-meteo.com/v1/forecast?latitude=6.24&longitude=-75.56&current_weather=true&timezone=America/Bogota"],
+      ["Cali", "https://api.open-meteo.com/v1/forecast?latitude=3.45&longitude=-76.52&current_weather=true&timezone=America/Bogota"],
+      ["Pereira", "https://api.open-meteo.com/v1/forecast?latitude=4.80&longitude=-75.69&current_weather=true&timezone=America/Bogota"]
+    ]);
+  
+    async function consultar(ciudad) {
+      const url = urlAPI.get(ciudad);
+      const ciudadElegida = ciudad;
+  
+      if (!url) {
+        console.error("Ciudad no encontrada en el diccionario.");
+        return;
+      }
+  
+      try {
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+  
+        const temperatura = datos.current_weather.temperature;
+        const codigoClima = datos.current_weather.weathercode;
+  
+        const condiciones = {
+          0: "Despejado",
+          1: "Mayormente despejado",
+          2: "Parcialmente nublado",
+          3: "Nublado",
+          45: "Niebla",
+          48: "Niebla con escarcha",
+          51: "Llovizna ligera",
+          53: "Llovizna moderada",
+          55: "Llovizna densa",
+          61: "Lluvia ligera",
+          63: "Lluvia moderada",
+          65: "Lluvia intensa",
+          80: "Chubascos ligeros",
+          81: "Chubascos moderados",
+        };
+        document.getElementById("ciudadActual").textContent = ciudadElegida;
+        document.getElementById("temperatura").textContent = temperatura;
+        document.getElementById("descripcion").textContent = condiciones[codigoClima] || "Desconocido";
+
+        // Selecciona el contenedor
+const contenedor = document.querySelector(".contenedor");
+
+// Limpia clases anteriores
+contenedor.className = "contenedor"; // reset
+
+        // Asigna clase según la condición
+        if ([0, 1].includes(codigoClima)) {
+            contenedor.classList.add("despejado");
+        } else if ([2, 3].includes(codigoClima)) {
+            contenedor.classList.add("nublado");
+        } else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(codigoClima)) {
+            contenedor.classList.add("lluvia");
+        } else if ([45, 48].includes(codigoClima)) {
+            contenedor.classList.add("niebla");
+        } else {
+            // Por defecto
+            contenedor.style.background = "#666";
+        }
+  
+      } catch (error) {
+        console.error("Error al obtener el clima:", error);
+      }
+    }
+  </script>
+</body>
+</html>
