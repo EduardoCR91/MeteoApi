@@ -8,14 +8,17 @@
 </head>
 <body>
 
-    
+  
     <div class="contenedor">
+      <video id="videoClima" autoplay muted loop></video>    
         <h3>Ciudad: </h3>
         <p id="ciudadActual"></p>
         
-        <p>Temperatura actual: <span id="temperatura"></span> °C</p><!--Mostrar temperatura-->
-        <p>Condiciones : <span id="descripcion"></span></p> <!--Mostrar descripcion del clima-->
-        <p>Current time : <span id="time"></span></p> <!--Mostrar descripcion del clima-->
+        <div class="info">
+          <p>Temperatura actual: <span id="temperatura"></span> °C</p><!--Mostrar temperatura-->
+          <p>Condiciones : <span id="descripcion"></span></p> <!--Mostrar descripcion del clima-->
+          <p>Current time : <span id="time"></span></p> <!--Mostrar descripcion del clima-->
+        </div>
     </div>
 
     <nav class="botonera">
@@ -42,7 +45,6 @@
       ["Nueva York", "https://api.open-meteo.com/v1/forecast?latitude=40.70&longitude=-74.01&current_weather=true&timezone=auto"]
     ]);
   
-    https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m
 
     async function consultar(ciudad) {
       const url = urlAPI.get(ciudad);
@@ -60,6 +62,7 @@
         const temperatura = datos.current_weather.temperature;
         const codigoClima = datos.current_weather.weathercode;
         const currentTime = datos.current_weather.time;
+
   
         const condiciones = {
           0: "Despejado",
@@ -86,21 +89,22 @@
 const contenedor = document.querySelector(".contenedor");
 
 // Limpia clases anteriores
-contenedor.className = "contenedor"; // reset
+//contenedor.className = "contenedor"; // reset
 
-        // Asigna clase según la condición
-        if ([0, 1].includes(codigoClima)) {
-            contenedor.classList.add("despejado");
-        } else if ([2, 3].includes(codigoClima)) {
-            contenedor.classList.add("nublado");
-        } else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(codigoClima)) {
-            contenedor.classList.add("lluvia");
-        } else if ([45, 48].includes(codigoClima)) {
-            contenedor.classList.add("niebla");
-        } else {
-            // Por defecto
-            contenedor.style.background = "#666";
-        }
+const video = document.getElementById("videoClima");
+let nombreVideo = "nieve"; // por defecto
+
+if ([0, 1].includes(codigoClima)) {
+    nombreVideo = "soleado";
+} else if ([2, 3].includes(codigoClima)) {
+    nombreVideo = "nublado";
+} else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(codigoClima)) {
+    nombreVideo = "lluvia";
+} else if ([45, 48].includes(codigoClima)) {
+    nombreVideo = "niebla";
+} 
+
+video.src = `videos/${nombreVideo}.mp4`; // carpeta 'videos' con tus archivos
   
       } catch (error) {
         console.error("Error al obtener el clima:", error);
