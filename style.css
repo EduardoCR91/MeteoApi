@@ -1,63 +1,59 @@
-  
-  .info {
-    position: relative;
-    z-index: 1;
-    color: white;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
-  }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #e0f7fa;
+  color: #333;
+}
 
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .contenedor {
-    position: relative;
-    z-index: 1;
-    padding: 30px;
-    border-radius: 15px;
-    color: white;
-    width: 400px;
-    text-align: center;
-    background-color: rgb(57, 146, 151); /* para que se lea el texto */
-  }
+nav.tabs, footer {
+  display: flex;
+  justify-content: space-around;
+  background: #00796b;
+  padding: 10px 0;
+  color: white;
+}
 
-  
-  #videoClima {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1; /* detrás del contenido */
-    border-radius: 15px;
-  }
-  
-  /* Estilos de los botones */
-  .botonera {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 14px;
-  }
-  
-  .botonera button {
-    padding: 10px 15px;
-    background-color: #4a90e2;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .botonera button:hover {
-    background-color: #357ab8;
-  }
+nav.tabs button, footer button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.seccion {
+  padding: 20px;
+}
+
+form input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 10px;
+}
+
+form button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#infoClima div {
+  background: #b2dfdb;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#listaFavoritos li {
+  background: #80cbc4;
+  margin: 5px;
+  padding: 10px;
+  list-style: none;
+  border-radius: 5px;
+}

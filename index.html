@@ -1,116 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MeteoApp</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Menú de pestañas superior -->
+  <nav class="tabs">
+    <button class="tab active" data-target="inicio" onclick="irAInicio()">Inicio</button>
+    <button onclick="mostrarSeccion('busqueda')">Búsqueda</button>
+    <button onclick="mostrarSeccion('filtro')">Filtro</button>
+    <button onclick="mostrarSeccion('favoritos')">Favoritos</button>
+    <button onclick="mostrarSeccion('registro')">Registro</button>
+    <button onclick="mostrarSeccion('configuracion')">Configuración</button>
+  </nav>
 
-  
-    <div class="contenedor">
-      <video id="videoClima" autoplay muted loop></video>    
-        <h3>Ciudad: </h3>
-        <h3 id="ciudadActual"></h3>
-        
-        <div class="info">
-          <p>Temperatura actual: <span id="temperatura"></span> °C</p><!--Mostrar temperatura-->
-          <p>Condiciones : <span id="descripcion"></span></p> <!--Mostrar descripcion del clima-->
-          <p>Current time : <span id="time"></span></p> <!--Mostrar descripcion del clima-->
-        </div>
-    </div>
+  <!-- Secciones -->
+  <section id="inicio" class="seccion">
+    <h2>Clima Actual</h2>
+    <div id="infoClima"></div>
+  </section>
 
-    <nav class="botonera">
-        <button onclick="consultar('Bogota')">Bogotá</button>
-        <button onclick="consultar('Barranquilla')">Barranquilla</button>
-        <button onclick="consultar('Cartagena')">Cartagena</button>
-        <button onclick="consultar('Medellin')">Medellín</button>
-        <button onclick="consultar('Cali')">Cali</button>
-        <button onclick="consultar('Pereira')">Pereira</button>
-        <button onclick="consultar('Londres')">Londres</button>
-        <button onclick="consultar('Nueva York')">Nueva York</button>
-      </nav>
+  <section id="busqueda" class="seccion" style="display:none">
+    <h2>Buscar ciudad</h2>
+    <input id="buscarCiudad" type="text" placeholder="Buscar ciudad">
+<button id="buscarBtn">Buscar</button>
+  </section>
 
-    
-<script>
-    const urlAPI = new Map([
-      ["Bogota", "https://api.open-meteo.com/v1/forecast?latitude=4.71&longitude=-74.07&current_weather=true&timezone=America/Bogota"],
-      ["Barranquilla", "https://api.open-meteo.com/v1/forecast?latitude=10.96&longitude=-74.81&current_weather=true&timezone=America/Bogota"],
-      ["Cartagena", "https://api.open-meteo.com/v1/forecast?latitude=10.39&longitude=-75.48&current_weather=true&timezone=America/Bogota"],
-      ["Medellin", "https://api.open-meteo.com/v1/forecast?latitude=6.24&longitude=-75.56&current_weather=true&timezone=America/Bogota"],
-      ["Cali", "https://api.open-meteo.com/v1/forecast?latitude=3.45&longitude=-76.52&current_weather=true&timezone=America/Bogota"],
-      ["Pereira", "https://api.open-meteo.com/v1/forecast?latitude=4.80&longitude=-75.69&current_weather=true&timezone=America/Bogota"],
-      ["Londres", "https://api.open-meteo.com/v1/forecast?latitude=51.50&longitude=-0.13&current_weather=true&timezone=auto"],
-      ["Nueva York", "https://api.open-meteo.com/v1/forecast?latitude=40.70&longitude=-74.01&current_weather=true&timezone=auto"]
-    ]);
-  
+  <section id="filtro" class="seccion" style="display:none">
+    <h2>Filtrar</h2>
+    <select id="filtro" onchange="aplicarFiltro()">
+      <option value="todos">Todos</option>
+      <option value="soleado">Soleado</option>
+      <option value="lluvioso">Lluvioso</option>
+    </select>
+  </section>
 
-    async function consultar(ciudad) {
-      const url = urlAPI.get(ciudad);
-      const ciudadElegida = ciudad;
-  
-      if (!url) {
-        console.error("Ciudad no encontrada en el diccionario.");
-        return;
-      }
-  
-      try {
-        const respuesta = await fetch(url);
-        const datos = await respuesta.json();
-  
-        const temperatura = datos.current_weather.temperature;
-        const codigoClima = datos.current_weather.weathercode;
-        const currentTime = datos.current_weather.time;
+  <section id="favoritos" class="seccion" style="display:none">
+    <h2>Favoritos</h2>
+    <ul id="listaFavoritos"></ul>
+  </section>
 
-  
-        const condiciones = {
-          0: "Despejado",
-          1: "Mayormente despejado",
-          2: "Parcialmente nublado",
-          3: "Nublado",
-          45: "Niebla",
-          48: "Niebla con escarcha",
-          51: "Llovizna ligera",
-          53: "Llovizna moderada",
-          55: "Llovizna densa",
-          61: "Lluvia ligera",
-          63: "Lluvia moderada",
-          65: "Lluvia intensa",
-          80: "Chubascos ligeros",
-          81: "Chubascos moderados",
-        };
-        document.getElementById("ciudadActual").textContent = ciudadElegida;
-        document.getElementById("temperatura").textContent = temperatura;
-        document.getElementById("descripcion").textContent = condiciones[codigoClima] || "Desconocido";
-        document.getElementById("time").textContent = currentTime;
+  <section id="registro" class="seccion" style="display:none">
+    <h2>Registro</h2>
+    <form onsubmit="registrarUsuario(event)">
+      <input type="text" id="nombre" placeholder="Nombre" required/>
+      <input type="email" id="email" placeholder="Correo electrónico" required/>
+      <input type="password" id="password" placeholder="Contraseña" required/>
+      <input type="text" placeholder="Dirección" required/>
+      <input type="text" placeholder="Ciudad" required/>
+      <input type="tel" placeholder="Teléfono" required/>
+      <input type="date" placeholder="Fecha de nacimiento" required/>
+      <button type="submit">Registrarse</button>
+    </form>
+  </section>
 
-        // Selecciona el contenedor
-const contenedor = document.querySelector(".contenedor");
+  <div id="resultadoClima"></div>
 
-// Limpia clases anteriores
-//contenedor.className = "contenedor"; // reset
+  <ul id="listaFavoritos"></ul>
 
-const video = document.getElementById("videoClima");
-let nombreVideo = "nieve"; // por defecto
+  <section id="configuracion" class="seccion" style="display:none">
+    <h2>Configuración</h2>
+    <p>Funcionalidad original: cambio de tema próximamente 🔧</p>
+  </section>
 
-if ([0, 1].includes(codigoClima)) {
-    nombreVideo = "soleado";
-} else if ([2, 3].includes(codigoClima)) {
-    nombreVideo = "nublado";
-} else if ([51, 53, 55, 61, 63, 65, 80, 81].includes(codigoClima)) {
-    nombreVideo = "lluvia";
-} else if ([45, 48].includes(codigoClima)) {
-    nombreVideo = "niebla";
-} 
+  <!-- Menú inferior -->
+  <footer>
+    <button class="tab active" data-target="inicio" onclick="irAInicio()">Inicio</button>
+    <button onclick="mostrarSeccion('favoritos')">Favoritos</button>
+    <button onclick="mostrarSeccion('registro')">Registro</button>
+    <button onclick="mostrarSeccion('configuracion')">Config</button>
+  </footer>
 
-video.src = `videos/${nombreVideo}.mp4`; // carpeta 'videos' con tus archivos
-
-  
-      } catch (error) {
-        console.error("Error al obtener el clima:", error);
-      }
-    }
-  </script>
+  <script src="app.js" type="module"></script>
 </body>
 </html>
