@@ -23,6 +23,8 @@
     <div id="infoClima"></div>
   </section>
 
+  <section id="ciudadesContainer" class="grid-container"></section>
+
   <section id="busqueda" class="seccion" style="display:none">
     <h2>Buscar ciudad</h2>
     <input id="buscarCiudad" type="text" placeholder="Buscar ciudad">
@@ -31,7 +33,7 @@
 
   <section id="filtro" class="seccion" style="display:none">
     <h2>Filtrar</h2>
-    <select id="filtro" onchange="aplicarFiltro()">
+    <select id="filtroClima" onchange="aplicarFiltro()">
       <option value="todos">Todos</option>
       <option value="soleado">Soleado</option>
       <option value="lluvioso">Lluvioso</option>
@@ -45,7 +47,7 @@
 
   <section id="registro" class="seccion" style="display:none">
     <h2>Registro</h2>
-    <form onsubmit="registrarUsuario(event)">
+    <form id="formRegistro" onsubmit="registrarUsuario(event)">
       <input type="text" id="nombre" placeholder="Nombre" required/>
       <input type="email" id="email" placeholder="Correo electrónico" required/>
       <input type="password" id="password" placeholder="Contraseña" required/>
@@ -59,7 +61,7 @@
 
   <div id="resultadoClima"></div>
 
-  <ul id="listaFavoritos"></ul>
+  
 
   <section id="configuracion" class="seccion" style="display:none">
     <h2>Configuración</h2>
