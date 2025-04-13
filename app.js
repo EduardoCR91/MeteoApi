@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>${datos.temperatura}°C</p>
             <p>${datos.estadoClima}</p>
             <p>${datos.tiempoActual}</p>
+            <button onclick='agregarFavorito("${ciudad}")'>💛 Agregar a favoritos</button>
           </div>
         </div>
       `;
@@ -198,26 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   
-  function mostrarClima(data, ciudad) {
-    const contenedor = document.getElementById('resultadoClima');
-    contenedor.innerHTML = `
-      <h3>${ciudad}</h3>
-      <p>Temperatura: ${data.current_weather.temperature} °C</p>
-      <p>Clima: ${data.current_weather.weathercode}</p>
-      <button onclick='agregarFavorito("${ciudad}")'>💛 Agregar a favoritos</button>
-    `;
-  }
-
-  // ========== Filtro por condición climática ==========
-  const filtroClima = document.getElementById('filtroClima');
-  if (filtroClima) {
-    filtroClima.addEventListener('change', aplicarFiltro);
-  }
-
-  function aplicarFiltro() {
-    const valor = document.getElementById('filtroClima').value;
-    alert(`Filtro aplicado: ${valor}`);
-  }
 
   // ========== Registro de usuario ==========
   const formRegistro = document.getElementById('formRegistro');

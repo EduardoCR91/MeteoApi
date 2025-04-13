@@ -9,7 +9,7 @@ body {
 nav.tabs, footer {
   display: flex;
   justify-content: space-around;
-  background: #00796b;
+  background: #3c89ad;
   padding: 10px 0;
   color: white;
 }
@@ -54,7 +54,7 @@ form button {
   display: block;
   margin: 10px auto;
   padding: 10px 20px;
-  background-color: #00796b;
+  background-color: #4b89c3;
   color: white;
   border: none;
   cursor: pointer;
@@ -110,7 +110,7 @@ form button {
 .chubascos-ligeros,
 .llovizna-intensa,
 .llovizna-ligera {
-  background: linear-gradient(to top, #4b79a1, #283e51);
+  background: linear-gradient(to top, #c6cdd2, #547898);
   color: white;
 }
 
