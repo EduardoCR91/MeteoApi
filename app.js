@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3>${ciudad}</h3>
             <p>${datos.temperatura}°C</p>
             <p>${datos.estadoClima.toLowerCase()}</p>
-            <p>${datos.tiempoActual}</p>
+            <p>${datos.tiempoActual.replace("T"," Time: ")}</p>
             <button onclick='agregarFavorito("${ciudad}")'>💛 Agregar a favoritos</button>
           </div>
         </div>
