@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
+
 document.addEventListener('DOMContentLoaded', () => {
   // ========== Navegación entre pestañas ==========
   const tabs = document.querySelectorAll('.tab');
@@ -68,12 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ========== Buscar ciudad ==========
-  const buscarBtn = document.getElementById('buscarBtn');
-  if (buscarBtn) {
-    buscarBtn.addEventListener('click', buscarCiudad);
-  }
-
+ 
   // Lista de ciudades con sus coordenadas
   const ciudades = {
     "Bogota": { lat: 4.7110, lon: -74.0721 },
@@ -158,21 +154,36 @@ document.addEventListener('DOMContentLoaded', () => {
     return { temperatura, estadoClima, tiempoActual };
   }
 
+
+  function clasificarClima(estadoClima) {
+    const estado = estadoClima.toLowerCase();
+  
+    if (estado.includes("lluvia") || estado.includes("llviz") || estado.includes("chubasco")) return "lluvia";
+    if (estado.includes("nieve")) return "nieve";
+    if (estado.includes("nublado") || estado.includes("nublado")) return "nublado";
+    if (estado.includes("niebla") || estado.includes("niebla")) return "niebla";
+    if (estado.includes("soleado") || estado.includes("despejado") || estado.includes("claro")) return "soleado";
+    
+    return "otros"; // categoría por defecto
+  }
+
   async function mostrarTodasLasCiudades(ciudades) {
     const contenedor = document.getElementById('ciudadesContainer');
     contenedor.innerHTML = '<p>Cargando clima...</p>';
   
     const cards = await Promise.all(ciudades.map(async ciudad => {
       const datos = await obtenerClima(ciudad); // Función que ya debes tener
+
+      const climaClasificado = clasificarClima(datos.estadoClima);
       return `
-        <div class="card ${datos.estadoClima.toLowerCase()}">
+        <div class="card ${datos.estadoClima.toLowerCase()}" data-nombre="${ciudad.toLowerCase()}" data-estado="${climaClasificado}">
           <video class="bg-video" autoplay muted loop playsinline>
             <source src="/videos/${datos.estadoClima.toLowerCase()}.mp4" type="video/mp4">
           </video>
-          <div class="card ${datos.estadoClima.toLowerCase()} data-nombre="${ciudad.toLowerCase()}" data-estado="${datos.estadoClima.toLowerCase()}">
+          
             <h3>${ciudad}</h3>
             <p>${datos.temperatura}°C</p>
-            <p>${datos.estadoClima}</p>
+            <p>${datos.estadoClima.toLowerCase()}</p>
             <p>${datos.tiempoActual}</p>
             <button onclick='agregarFavorito("${ciudad}")'>💛 Agregar a favoritos</button>
           </div>
@@ -185,6 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+ // ========== Buscar ciudad ==========
+ const buscarBtn = document.getElementById('buscarBtn');
+ if (buscarBtn) {
+   buscarBtn.addEventListener('click', buscarCiudad);
+ }
 
   
   document.getElementById('buscarCiudad').addEventListener('input', function () {
@@ -192,8 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
   
     cards.forEach(card => {
-      const nombre = card.dataset.nombre;
-      const estado = card.dataset.estado;
+      const nombre = card.dataset.nombre || "";
+      const estado = card.dataset.estado || "";
       const visible = nombre.includes(termino) || estado.includes(termino);
       card.style.display = visible ? 'block' : 'none';
     });
@@ -242,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function mostrarFavoritos() {
+  async function mostrarFavoritos() {
     const contenedor = document.getElementById('listaFavoritos');
     if (!contenedor) return;
   
@@ -253,22 +269,64 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
   
-    contenedor.innerHTML = favoritos.map(ciudad => `
-      <li>
-        ${ciudad} 
-        <button class="btn-eliminar" data-ciudad="${encodeURIComponent(ciudad)}">❌</button>
-      </li>
-    `).join('');
+      // Cambiamos el HTML para que sea un contenedor de cards
+      contenedor.innerHTML = '<div class="favoritos-container" id="favoritosCards"></div>';
+      
+      // Mostramos las cards de favoritos
+      await mostrarCardsFavoritos(favoritos);
+  }
+
+
+  async function mostrarCardsFavoritos(ciudadesFavoritas) {
+    const contenedor = document.getElementById('favoritosCards');
+    contenedor.innerHTML = '<p>Cargando tus ciudades favoritas...</p>';
   
-    // Agregar eventos a los botones después de renderizar
-    const botonesEliminar = contenedor.querySelectorAll('.btn-eliminar');
-    botonesEliminar.forEach(boton => {
-      boton.addEventListener('click', () => {
-        const ciudad = decodeURIComponent(boton.dataset.ciudad);
+    const cards = await Promise.all(ciudadesFavoritas.map(async ciudad => {
+      if (!ciudades[ciudad]) {
+        return `<div class="card error">
+          <p>${ciudad} - Datos no disponibles</p>
+          <button class="btn-eliminar" data-ciudad="${encodeURIComponent(ciudad)}">❌ Eliminar</button>
+        </div>`;
+      }
+  
+      try {
+        const datos = await obtenerClima(ciudad);
+        const climaClasificado = clasificarClima(datos.estadoClima);
+        
+        return `
+          <div class="card ${datos.estadoClima.toLowerCase()}" data-nombre="${ciudad.toLowerCase()}" data-estado="${climaClasificado}">
+            <video class="bg-video" autoplay muted loop playsinline>
+              <source src="/videos/${datos.estadoClima.toLowerCase()}.mp4" type="video/mp4">
+            </video>
+            <div class="card-content">
+              <h3>${ciudad}</h3>
+              <p>${datos.temperatura}°C</p>
+              <p>${datos.estadoClima.toLowerCase()}</p>
+              <p>${datos.tiempoActual}</p>
+              <button class="btn-eliminar" data-ciudad="${encodeURIComponent(ciudad)}">❌ Eliminar</button>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        return `<div class="card error">
+          <p>Error cargando ${ciudad}</p>
+          <button class="btn-eliminar" data-ciudad="${encodeURIComponent(ciudad)}">❌ Eliminar</button>
+        </div>`;
+      }
+    }));
+  
+    contenedor.innerHTML = cards.join('');
+  
+    // Agregar eventos a los botones de eliminar
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const ciudad = decodeURIComponent(e.target.dataset.ciudad);
         eliminarFavorito(ciudad);
       });
     });
   }
+
+
 
   function eliminarFavorito(ciudad) {
     let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
@@ -284,6 +342,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.agregarFavorito = agregarFavorito;
 
-  
+  document.getElementById('filtroClima').addEventListener('change', filtrarPorClima);
+
 
 });
+
+function filtrarPorClima() {
+  const climaSeleccionado = document.getElementById("filtroClima").value.toLowerCase();
+  const tarjetas = document.querySelectorAll(".card");
+
+  tarjetas.forEach(tarjeta => {
+    // Si el clima es "todos", se muestran todas las tarjetas
+    if (climaSeleccionado === "todos") {
+      tarjeta.style.display = "block";
+    } else {
+      // Solo se muestran si tienen una clase exacta que coincide
+      const estadoTarjeta = tarjeta.dataset.estado.toLowerCase();
+      tarjeta.style.display = estadoTarjeta.toLowerCase() === climaSeleccionado.toLowerCase() ? "block" : "none";
+    }
+  });
+}

@@ -11,7 +11,7 @@
   <nav class="tabs">
     <button class="tab active" data-target="inicio" onclick="irAInicio()">Inicio</button>
     <button onclick="mostrarSeccion('busqueda')">Búsqueda</button>
-    <button onclick="mostrarSeccion('filtro')">Filtro</button>
+    <button onclick="mostrarSeccion('filtrarPorClima')">Filtro</button>
     <button onclick="mostrarSeccion('favoritos')">Favoritos</button>
     <button onclick="mostrarSeccion('registro')">Registro</button>
     <button onclick="mostrarSeccion('configuracion')">Configuración</button>
@@ -24,12 +24,15 @@
 <button id="buscarBtn">Buscar</button>
   </section>
 
-  <section id="filtro" class="seccion" style="display:none">
+  <section id="filtrarPorClima" class="seccion" style="display:none" >
     <h2>Filtrar</h2>
-    <select id="filtroClima" onchange="aplicarFiltro()">
+    <select id="filtroClima" onchange="filtrarPorClima()">
       <option value="todos">Todos</option>
       <option value="soleado">Soleado</option>
-      <option value="lluvioso">Lluvioso</option>
+      <option value="lluvia">Lluvia</option>
+      <option value="nieve">Nieve</option>
+      <option value="niebla">Niebla</option>
+      <option value="nublado">Nublado</option>
     </select>
   </section>
 
