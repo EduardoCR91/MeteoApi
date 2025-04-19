@@ -1,4 +1,16 @@
 export function inicializarBusqueda() {
+
+  const contenedor = document.querySelector('.contenedor');
+  
+  contenedor.innerHTML = `
+    <section id="busqueda" class="section" style="display:none">
+    <h2>Buscar ciudad</h2>
+    <input id="buscarCiudad" type="text" placeholder="Buscar ciudad">
+    <button id="buscarBtn">Buscar</button>
+  </section>
+  `;
+
+
     const buscarBtn = document.getElementById('buscarBtn');
     if (buscarBtn) {
       buscarBtn.addEventListener('click', buscarCiudad);
@@ -52,3 +64,5 @@ export function inicializarBusqueda() {
       }
     });
   }
+
+ 

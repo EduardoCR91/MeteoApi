@@ -1,4 +1,25 @@
 export function inicializarRegistro() {
+
+  const contenedor = document.querySelector('.contenedor');
+  
+  contenedor.innerHTML = `
+  <section id="registro" class="section" style="display:none">
+    <h2>Registro</h2>
+    <form id="formRegistro">
+      <input type="text" id="nombre" placeholder="Nombre" required/>
+      <input type="email" id="email" placeholder="Correo electrónico" required/>
+      <input type="password" id="password" placeholder="Contraseña" required/>
+      <input type="text" placeholder="Dirección" required/>
+      <input type="text" placeholder="Ciudad" required/>
+      <input type="tel" placeholder="Teléfono" required/>
+      <input type="date" placeholder="Fecha de nacimiento" required/>
+      <button type="submit">Registrarse</button>
+    </form>
+  </section>
+  `;
+
+
+
     const formRegistro = document.getElementById('formRegistro');
     if (formRegistro) {
       formRegistro.addEventListener('submit', registrarUsuario);

@@ -8,6 +8,7 @@ import { inicializarBusqueda } from './busqueda.js';
 import { inicializarFavoritos, agregarFavorito } from './favoritos.js';
 import { inicializarRegistro } from './registro.js';
 import { ciudades, codigosClima, mostrarTodasLasCiudades } from './weather.js';
+import { filtrar } from './filtrar.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Configuración de Firebase
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   inicializarBusqueda();
   inicializarFavoritos();
   inicializarRegistro();
+  filtrar();
 
   // Cargar ciudades al inicio
   const nombresCiudades = Object.keys(ciudades).slice(0, 100);
