@@ -16,20 +16,21 @@
     z-index: 1;
     color: white;
     text-align: center;
-    padding-top: 100px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    margin-bottom: 50px;
 }
 
 h1{
     text-transform: uppercase;
 }
 
-.contenedorInfimg{
-    width: 200px;
+.contenedorInf img{
+    width: 300px;
     height: auto;
 }
 

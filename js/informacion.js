@@ -8,7 +8,7 @@ function informacion(){
         <h3>Carlos Eduardo Cruz</h3>
         <img src="/storm.png" alt="clima">
         <div class="texto">
-            <p>Api con informacion del clima de 75 ciudades</p>
+            <p>Api con informacion del clima de 34 ciudades</p>
         </div>
        <a href="https://github.com/EduardoCR91">github.com/EduardoCR91 v 1.0.1</a> 
     </div>

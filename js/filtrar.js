@@ -1,9 +1,15 @@
+import { mostrarTodasLasCiudades, ciudades } from './weather.js';
+
 export function filtrar(){
+
+
+    const nombresCiudades = Object.keys(ciudades).slice(0, 100); // Hasta 100
+    mostrarTodasLasCiudades(nombresCiudades);
+
     const contenedor = document.querySelector('.contenedor');
   
-    contenedor.innerHTML =``;
 
-    contenedor.innerHTML = `
+    contenedor.innerHTML += `
   <section id="filtrarPorClima" class="section" style="display:none" >
     <h2>Filtrar</h2>
     <select id="filtroClima">
