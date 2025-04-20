@@ -1,6 +1,8 @@
 export function filtrar(){
     const contenedor = document.querySelector('.contenedor');
   
+    contenedor.innerHTML =``;
+
     contenedor.innerHTML = `
   <section id="filtrarPorClima" class="section" style="display:none" >
     <h2>Filtrar</h2>

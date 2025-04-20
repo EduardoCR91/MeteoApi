@@ -83,6 +83,17 @@ export const ciudades = {
   }
   
   export async function mostrarTodasLasCiudades(ciudades) {
+
+    const contenedorMain = document.querySelector('.contenedor');
+
+    contenedorMain.innerHTML = `  
+    <section id="inicio" class="section">
+      <h2>Clima Actual</h2>
+      <div id="infoClima"></div>
+      <div id="ciudadesContainer" class="grid-container"></div>
+    </section>
+    <div id="resultadoClima"></div>`;
+
     const contenedor = document.getElementById('ciudadesContainer');
     contenedor.innerHTML = '<p>Cargando clima...</p>';
   

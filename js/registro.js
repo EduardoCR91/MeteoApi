@@ -18,6 +18,7 @@ export function inicializarRegistro() {
   </section>
   `;
 
+  document.getElementById('registro').style.display = 'block';
 
 
     const formRegistro = document.getElementById('formRegistro');

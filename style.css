@@ -26,7 +26,7 @@ nav.tabs button, footer button {
   padding: 20px;
 }
 
-.grid-container {
+.grid-container, .favoritos-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
@@ -67,14 +67,19 @@ form button {
   border-radius: 5px;
 }
 
-#listaFavoritos li {
+/*#listaFavoritos li {
   background: #80cbc4;
   margin: 5px;
   padding: 10px;
   list-style: none;
   border-radius: 5px;
 }
+*/
 
+#listaFavoritos {
+  margin: 0;
+  padding: 0;
+}
 
 .card {
   padding: 1rem;

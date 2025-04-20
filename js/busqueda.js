@@ -7,6 +7,7 @@ export function inicializarBusqueda() {
     <h2>Buscar ciudad</h2>
     <input id="buscarCiudad" type="text" placeholder="Buscar ciudad">
     <button id="buscarBtn">Buscar</button>
+    <div id="ciudadesContainer" class="cards-container"></div>
   </section>
   `;
 
@@ -27,8 +28,12 @@ export function inicializarBusqueda() {
     }
   }
   
-  function buscarCiudad() {
+  async function buscarCiudad() {
     const termino = document.getElementById('buscarCiudad').value.toLowerCase();
+
+    await mostrarTodasLasCiudades(Object.keys(ciudades));
+
+
     const cards = document.querySelectorAll('.card');
   
     cards.forEach(card => {

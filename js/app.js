@@ -4,11 +4,12 @@ import { getFirestore, collection, addDoc } from "https://www.gstatic.com/fireba
 
 // Importa los módulos necesarios
 import { inicializarNavegacion } from './navegacion.js';
-import { inicializarBusqueda } from './busqueda.js';
+/*import { inicializarBusqueda } from './busqueda.js';
 import { inicializarFavoritos, agregarFavorito } from './favoritos.js';
-import { inicializarRegistro } from './registro.js';
+import { inicializarRegistro } from './registro.js';*/
 import { ciudades, codigosClima, mostrarTodasLasCiudades } from './weather.js';
-import { filtrar } from './filtrar.js';
+/*import { filtrar } from './filtrar.js';
+import { mostrarConfiguracion } from './config.js';*/
 
 document.addEventListener('DOMContentLoaded', () => {
   // Configuración de Firebase
@@ -30,14 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
   window.firebaseDB = db;
   window.firebaseAddDoc = addDoc;
   window.firebaseCollection = collection;
-  window.agregarFavorito = agregarFavorito;
+  //window.agregarFavorito = agregarFavorito;
 
   // Inicializar módulos
   inicializarNavegacion();
-  inicializarBusqueda();
+  /*inicializarBusqueda();
   inicializarFavoritos();
   inicializarRegistro();
   filtrar();
+  mostrarConfiguracion();*/
 
   // Cargar ciudades al inicio
   const nombresCiudades = Object.keys(ciudades).slice(0, 100);

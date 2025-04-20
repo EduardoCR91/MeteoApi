@@ -14,6 +14,17 @@ export function agregarFavorito(ciudad) {
 }
 
 export async function mostrarFavoritos() {
+
+  const contenedorPrincipal = document.querySelector('.contenedor');
+
+  contenedorPrincipal.innerHTML = ``;
+
+  contenedorPrincipal.innerHTML = `
+    <section id="favoritos" class="section" style="display:none">
+    <h2>Favoritos</h2>
+    <ul id="listaFavoritos"></ul>
+  </section>`;
+
   const contenedor = document.getElementById('listaFavoritos');
   if (!contenedor) return;
 
@@ -83,3 +94,4 @@ function eliminarFavorito(ciudad) {
   localStorage.setItem('favoritos', JSON.stringify(favoritos));
   mostrarFavoritos();
 }
+
