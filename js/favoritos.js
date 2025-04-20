@@ -5,12 +5,20 @@ export function inicializarFavoritos() {
 }
 
 export function agregarFavorito(ciudad) {
-  let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-  if (!favoritos.includes(ciudad)) {
-    favoritos.push(ciudad);
-    localStorage.setItem('favoritos', JSON.stringify(favoritos));
-    mostrarFavoritos();
+  // Validación adicional
+  if (!ciudad || typeof ciudad !== 'string' || ciudad.trim() === '') {
+    console.error('Intento de agregar favorito inválido:', ciudad);
+    return;
   }
+
+  let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+  
+  // Filtra posibles nulls existentes y duplicados
+  favoritos = favoritos.filter(item => item !== null && item !== ciudad);
+  
+  favoritos.push(ciudad);
+  localStorage.setItem('favoritos', JSON.stringify(favoritos));
+  mostrarFavoritos();
 }
 
 export async function mostrarFavoritos() {
@@ -23,6 +31,7 @@ export async function mostrarFavoritos() {
     <section id="favoritos" class="section" style="display:none">
     <h2>Favoritos</h2>
     <ul id="listaFavoritos"></ul>
+    <p id="listaF></p>
   </section>`;
 
   const contenedor = document.getElementById('listaFavoritos');
@@ -36,8 +45,12 @@ export async function mostrarFavoritos() {
   }
 
   contenedor.innerHTML = '<div class="favoritos-container" id="favoritosCards"></div>';
+
   await mostrarCardsFavoritos(favoritos);
+
+  console.log("Contenido del JSON: ", favoritos);
 }
+
 
 async function mostrarCardsFavoritos(ciudadesFavoritas) {
   const contenedor = document.getElementById('favoritosCards');
@@ -45,7 +58,8 @@ async function mostrarCardsFavoritos(ciudadesFavoritas) {
 
   const cards = await Promise.all(ciudadesFavoritas.map(async ciudad => {
     if (!ciudades[ciudad]) {
-      return `<div class="card error">
+      return `
+      <div class="card error">
         <p>${ciudad} - Datos no disponibles</p>
         <button class="btn-eliminar" data-ciudad="${encodeURIComponent(ciudad)}">❌ Eliminar</button>
       </div>`;
@@ -94,4 +108,5 @@ function eliminarFavorito(ciudad) {
   localStorage.setItem('favoritos', JSON.stringify(favoritos));
   mostrarFavoritos();
 }
+
 
