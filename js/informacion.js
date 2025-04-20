@@ -1,9 +1,9 @@
-export function informacion(){
+function informacion(){
     const contenedor = document.querySelector(".contenedor")
 
     contenedor.innerHTML = `
             <div class="fondo-borroso"></div>
-    <div class="contenedor">
+    <div class="contenedorInf">
         <h1>Meteo Api</h1>
         <h3>Carlos Eduardo Cruz</h3>
         <img src="/storm.png" alt="clima">
@@ -15,3 +15,5 @@ export function informacion(){
     
     `;
 }
+
+window.informacion = informacion;

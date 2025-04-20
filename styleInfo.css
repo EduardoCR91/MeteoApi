@@ -1,9 +1,4 @@
-body{
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-}
+
 
 .fondo-borroso {
     position: fixed; /* que quede fijo aunque hagas scroll */
@@ -16,7 +11,7 @@ body{
     z-index: -1; /* lo pone al fondo, detrás del contenido */
 }
 
-.contenedor {
+.contenedorInf {
     position: relative;
     z-index: 1;
     color: white;
@@ -26,15 +21,15 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 h1{
     text-transform: uppercase;
 }
 
-.contenedor img{
-    width: 300px;
+.contenedorInfimg{
+    width: 200px;
     height: auto;
 }
 
@@ -46,7 +41,7 @@ h1{
     padding: 10px;
     font-size: larger;
 }
-.contenedor a{
+.contenedorInf a{
     text-decoration: none;
     color: white;
     font-size: larger;
