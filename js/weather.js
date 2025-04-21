@@ -103,7 +103,7 @@ export const ciudades = {
       return `
         <div class="card ${datos.estadoClima.toLowerCase()}" data-nombre="${ciudad.toLowerCase()}" data-estado="${climaClasificado}">
           <video class="bg-video" autoplay muted loop playsinline>
-            <source src="/videos/${datos.estadoClima.toLowerCase()}.mp4" type="video/mp4">
+            <source src="videos/${datos.estadoClima.toLowerCase()}.mp4" type="video/mp4">
           </video>
           <h3>${ciudad}</h3>
           <p>${datos.temperatura}°C</p>

@@ -6,7 +6,7 @@ function informacion(){
     <div class="contenedorInf">
         <h1>Meteo Api</h1>
         <h3>Carlos Eduardo Cruz</h3>
-        <img src="/storm.png" alt="clima">
+        <img src="storm.png" alt="clima">
         <div class="texto">
             <p>Api con informacion del clima de 34 ciudades</p>
         </div>
