@@ -49,3 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error("Error al mostrar ciudades:", error);
   });
 });
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('Service Worker registrado', reg))
+      .catch(err => console.log('Error registrando Service Worker', err));
+  });
+}
